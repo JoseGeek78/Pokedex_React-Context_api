@@ -1,9 +1,7 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Navigation } from "./components/Navigation";
-import { HomePage } from "./pages/HomePage";
-import { PokemonPage } from "./pages/PokemonPage";
-import { SearchPage } from "./pages/SearchPage";
+import { HomePage, PokemonPage, SearchPage } from "./pages";
 
 export const AppRouter = () => {
   return (
@@ -14,7 +12,7 @@ export const AppRouter = () => {
         <Route path="search" element={<SearchPage />} />
       </Route>
 
-      <Route path='*' component={<Navigate to='/' />} />
+      <Route path="*" component={<Navigate to="/" />} />
     </Routes>
   );
 };

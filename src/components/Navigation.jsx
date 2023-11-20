@@ -4,8 +4,8 @@ import { PokemonContext } from "../context/PokemonContext";
 
 export const Navigation = () => {
 
- const context = useContext(PokemonContext)
- console.log(context)
+ const {} = useContext(PokemonContext)
+ 
 
   return (
     <>

@@ -2,10 +2,14 @@ import { useState, useEffect } from "react";
 import { PokemonContext } from "./PokemonContext";
 
 export const PokemonProvider = ({ children }) => {
-
-  const [allPokemons, setAllPokemons] = useState({})
-  const [globalPokemons, setGlobalPokemons] = useState([])
+  const [allPokemons, setAllPokemons] = useState({});
+  const [globalPokemons, setGlobalPokemons] = useState([]);
   const [offset, setOffset] = useState(0);
+
+  // Estados simples para la App
+
+  const [loading, setLoading] = useState(true);
+  const [active, setActive] = useState(false);
 
   // Llamar 50 pokemon de la API
 
@@ -17,46 +21,53 @@ export const PokemonProvider = ({ children }) => {
     );
     const data = await res.json();
 
-    const promises = data.result.map(async(pokemon) => {
-      const res = await fetch(pokemon.url)
-      const data = await res.json()
-      return data
-    })
+    const promises = data.result.map(async (pokemon) => {
+      const res = await fetch(pokemon.url);
+      const data = await res.json();
+      return data;
+    });
 
-    const results = await Promise.all(promises)  
-    
-    setAllPokemons(results)
+    const results = await Promise.all(promises);
+
+    setAllPokemons(results);
   };
 
   //Llamar a todos los Pokemon
 
-  const getGlobalPokemons = async() => {
-    const baseURL = "https://pokeapi.co/api/v2/"
+  const getGlobalPokemons = async () => {
+    const baseURL = "https://pokeapi.co/api/v2/";
 
-    const res = await fetch(
-      `${baseURL}pokemon?limit=100000&offset=0`
-    );
+    const res = await fetch(`${baseURL}pokemon?limit=100000&offset=0`);
     const data = await res.json();
 
-    const promises = data.result.map(async(pokemon) => {
-      const res = await fetch(pokemon.url)
-      const data = await res.json()
-      return data
-    })
+    const promises = data.result.map(async (pokemon) => {
+      const res = await fetch(pokemon.url);
+      const data = await res.json();
+      return data;
+    });
 
-    const results = await Promise.all(promises)  
-    
-    setGlobalPokemons(results)
+    const results = await Promise.all(promises);
+
+    setGlobalPokemons(results);
   };
-  
+
+  //Llamar a un Pokemon por ID
+
+  const getPokemonByID = async (id) => {
+    const baseURL = "https://pokeapi.co/api/v2/";
+
+    const res = await fetch(`${baseURL}pokemon/${id}`);
+    const data = await res.json();
+    return data;
+  };
 
   useEffect(() => {
-    getAllPokemons()
-   }, [])
-  
-   useEffect(() => {
-    getGlobalPokemons()
-   }, [])
+    getAllPokemons();
+  }, []);
+
+  useEffect(() => {
+    getGlobalPokemons();
+  }, []);
 
   return (
     <PokemonContext.Provider

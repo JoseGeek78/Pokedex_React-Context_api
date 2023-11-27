@@ -54,6 +54,9 @@ export const PokemonProvider = ({ children }) => {
     getAllPokemons()
    }, [])
   
+   useEffect(() => {
+    getGlobalPokemons()
+   }, [])
 
   return (
     <PokemonContext.Provider

@@ -6,6 +6,8 @@ export const PokemonProvider = ({ children }) => {
   const [globalPokemons, setGlobalPokemons] = useState([]);
   const [offset, setOffset] = useState(0);
 
+  // Utilizar CustomHook - useForm
+
   // Estados simples para la App
 
   const [loading, setLoading] = useState(true);
@@ -29,7 +31,8 @@ export const PokemonProvider = ({ children }) => {
 
     const results = await Promise.all(promises);
 
-    setAllPokemons(results);
+    setAllPokemons([...allPokemons, ...results]);
+    setLoading(false);
   };
 
   //Llamar a todos los Pokemon
@@ -49,6 +52,7 @@ export const PokemonProvider = ({ children }) => {
     const results = await Promise.all(promises);
 
     setGlobalPokemons(results);
+    setLoading(false);
   };
 
   //Llamar a un Pokemon por ID
